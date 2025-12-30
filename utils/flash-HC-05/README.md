@@ -9,9 +9,9 @@ Connect the HC-05 module to your Arduino as follows:
 
 - HC-05 VCC to Arduino 5V
 - HC-05 GND to Arduino GND
-- HC-05 TXD to Arduino RX (Pin 10) through logic level converter (to step up 3.3V to 5V)
+- HC-05 TXD to Arduino RX (Pin 10). Optionally through logic level converter (to step up 3.3V to 5V)
 - HC-05 RXD to Arduino TX (Pin 11) through logic level converter (to step down 5V to 3.3V)
-- HC-05 KEY/EN to Arduino Pin 9 (Make sure to connect the KEY/EN pin to HIGH to enter AT command mode) 
+- HC-05 KEY/EN to Arduino +3V3 to enter AT command mode
 
 ## Code
 
