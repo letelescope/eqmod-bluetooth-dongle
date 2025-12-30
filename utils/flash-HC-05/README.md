@@ -9,9 +9,9 @@ Connect the HC-05 module to your Arduino as follows:
 
 - HC-05 VCC to Arduino 5V
 - HC-05 GND to Arduino GND
-- HC-05 TXD to Arduino RX (Pin 10) through logic level converter (to step up 3.3V to 5V)
+- HC-05 TXD to Arduino RX (Pin 10). Optionally through logic level converter (to step up 3.3V to 5V)
 - HC-05 RXD to Arduino TX (Pin 11) through logic level converter (to step down 5V to 3.3V)
-- HC-05 KEY/EN to Arduino Pin 9 (Make sure to connect the KEY/EN pin to HIGH to enter AT command mode) 
+- HC-05 KEY/EN to Arduino +3V3 to enter AT command mode
 
 ## Code
 
@@ -28,26 +28,41 @@ const byte EN_PIN = 9;  // Directly connected to the enable pin of the HC-05 blu
 SoftwareSerial Bluetooth(RX_PIN, TX_PIN); // RX, TX
 
 void setup() {
-
-  pinMode(EN_PIN, OUTPUT);
-  digitalWrite(EN_PIN, HIGH); // Enable the HC-05 module
-
   Serial.begin(9600);        // Arduino UNO default serial speed 
-  Bluetooth.begin(38400);    // HC-05 default speed in AT command mode
-  
-  Serial.println("HC-05 module in AT command mode. Enter AT commands:");
+
+  Serial.println("Choose Bluetooth HC-05 module mode:");
+  Serial.println(" - 1: To enter AT command mode, ensure KEY/EN pin is HIGH before powering the module.");
+  Serial.println(" - 2: To enter Data mode, ensure KEY/EN pin is LOW before powering the module.");
+
+  int choice = 0;
+  while (!(choice == 1 || choice == 2)){
+    if (Serial.available()) {
+      String response = Serial.readStringUntil('\n');
+      response.trim();
+      choice = response.toInt();
+    }
+  }
+  if (choice == 1) {
+    Serial.println("HC-05 module in AT command mode. Enter AT commands:");
+    Bluetooth.begin(38400);    // HC-05 default speed in AT command mode
+  } else {
+    Serial.println("HC-05 set to Data mode.");
+    Bluetooth.begin(9600);    // HC-05 default speed in Data mode
+  }
 }
 
 void loop() {
 
   if (Bluetooth.available()) {
-    char c = Bluetooth.read();
-    Serial.write(c); // Forward data from Bluetooth to Serial Monitor
+    String command = Bluetooth.readStringUntil('\n');
+    command.trim(); // Remove any trailing newline or spaces
+    Serial.println(command); // Forward data from Bluetooth to Serial Monitor
   }
 
   if (Serial.available()) {
-    char c = Serial.read();
-    Bluetooth.write(c); // Forward data from Serial Monitor to Bluetooth
+    String response = Serial.readStringUntil('\n');
+    response.trim(); // Remove any trailing newline or spaces
+    Bluetooth.println(response); // Forward data from Serial Monitor to Bluetooth
   }
 }
 ```
