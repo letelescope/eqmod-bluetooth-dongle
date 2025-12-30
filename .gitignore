@@ -1,3 +1,5 @@
+/electronics/eqmod-bluetooth-dongle/eqmod-bluetooth-dongle-backups
+
 /utils/flash-HC-05/.pio
 /utils/flash-HC-05/.vscode/.browse.c_cpp.db*
 /utils/flash-HC-05/.vscode/c_cpp_properties.json
