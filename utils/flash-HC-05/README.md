@@ -30,25 +30,7 @@ SoftwareSerial Bluetooth(RX_PIN, TX_PIN); // RX, TX
 void setup() {
   Serial.begin(9600);        // Arduino UNO default serial speed 
 
-  Serial.println("Choose Bluetooth HC-05 module mode:");
-  Serial.println(" - 1: To enter AT command mode, ensure KEY/EN pin is HIGH before powering the module.");
-  Serial.println(" - 2: To enter Data mode, ensure KEY/EN pin is LOW before powering the module.");
-
-  int choice = 0;
-  while (!(choice == 1 || choice == 2)){
-    if (Serial.available()) {
-      String response = Serial.readStringUntil('\n');
-      response.trim();
-      choice = response.toInt();
-    }
-  }
-  if (choice == 1) {
-    Serial.println("HC-05 module in AT command mode. Enter AT commands:");
-    Bluetooth.begin(38400);    // HC-05 default speed in AT command mode
-  } else {
-    Serial.println("HC-05 set to Data mode.");
-    Bluetooth.begin(9600);    // HC-05 default speed in Data mode
-  }
+  selectBluetoothModuleMode(); // Prompt user to select mode AT command mode or Data mode
 }
 
 void loop() {
@@ -65,6 +47,8 @@ void loop() {
     Bluetooth.println(response); // Forward data from Serial Monitor to Bluetooth
   }
 }
+
+// ...
 ```
 
 This platformio project already includes the [main.cpp](./src/main.cpp) file as well as a [platformio.ini](./platformio.ini) file. Hence, you can directly upload it to your Arduino board and start palying with it.
