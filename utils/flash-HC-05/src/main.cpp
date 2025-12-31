@@ -17,30 +17,13 @@ const byte TX_PIN = 11; // TX arduino pin, connected (via logic level converter)
 
 SoftwareSerial Bluetooth(RX_PIN, TX_PIN); // RX, TX
 
+int selectBluetoothModuleMode();
+
 void setup() {
 
-  Serial.begin(9600);        // Arduino UNO default serial speed 
+  Serial.begin(9600);          // Arduino UNO default serial speed 
 
-  Serial.println("Choose Bluetooth HC-05 module mode:");
-  Serial.println(" - 1: To enter AT command mode, ensure KEY/EN pin is HIGH before powering the module.");
-  Serial.println(" - 2: To enter Data mode, ensure KEY/EN pin is LOW before powering the module.");
-
-  int choice = 0;
-  while (!(choice == 1 || choice == 2)){
-    if (Serial.available()) {
-      String response = Serial.readStringUntil('\n');
-      response.trim();
-      choice = response.toInt();
-    }
-  }
-  if (choice == 1) {
-    Serial.println("HC-05 module in AT command mode. Enter AT commands:");
-    Bluetooth.begin(38400);    // HC-05 default speed in AT command mode
-  } else {
-    Serial.println("HC-05 set to Data mode.");
-    Bluetooth.begin(9600);    // HC-05 default speed in Data mode
-  }
-
+  selectBluetoothModuleMode(); // Prompt user to select mode AT command mode or Data mode
 }
 
 void loop() {
@@ -55,5 +38,30 @@ void loop() {
     String response = Serial.readStringUntil('\n');
     response.trim(); // Remove any trailing newline or spaces
     Bluetooth.println(response); // Forward data from Serial Monitor to Bluetooth
+  }
+}
+
+int selectBluetoothModuleMode() {
+  Serial.println("Select HC-05 Bluetooth Module Mode:");
+  Serial.println("1: AT Command Mode, ensure KEY/EN pin is HIGH before powering the module.");
+  Serial.println("2: Data Mode, ensure KEY/EN pin is LOW before powering the module.");
+
+  while (true) {
+    if (Serial.available()) {
+      switch (Serial.readStringUntil('\n').toInt())
+      {
+      case 1:
+        Serial.println("HC-05 set to AT Command Mode.");
+        Bluetooth.begin(38400); // Default baud rate for AT command mode
+        return 1;
+      case 2:
+        Serial.println("HC-05 set to Data Mode.");
+        Bluetooth.begin(9600); // Default baud rate for Data mode
+        return 2;
+      default:
+        Serial.println("Invalid choice. Please enter 1 or 2:");
+        break;
+      }
+    }
   }
 }

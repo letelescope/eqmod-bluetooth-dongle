@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Soldererd_Logic_level_shifter")(type "KiCad")(uri "${KIPRJMOD}/footprints/Soldererd_Logic_level_shifter/Soldererd_Logic_level_shifter.kicad_sym")(options "")(descr ""))
+  (lib (name "HC-05-BT-Module")(type "KiCad")(uri "${KIPRJMOD}/footprints/ZC142200/ZC142200.kicad_sym")(options "")(descr ""))
+)
