@@ -32,7 +32,13 @@ It consist of three sections:
 
 ## PCB Layout
 
-The PCB design implements the schematic, adhering to a straightforward routing strategy. The power inputs and signals are limited to the top layer, while the bottom layer functions exclusively as a ground plane.
+The PCB design implements the schematic, adhering to a straightforward routing strategy. This is a 4-layer PCB:
+
+- Top Layer: Component placement and signal routing. With the exception of +12V routing from mount connector to the voltage regulator.
+- Inner Layer 1: +5V power plane.
+- Inner Layer 2: +3.3V power plane.
+- Bottom Layer: Ground plane.
+
 
 ![EQMOD Bluetooth Dongle PCB](../../.static/dongle-pcb-layout.png)
 
