@@ -43,9 +43,11 @@ The schematic diagrams and PCB layouts for the EQMOD Bluetooth dongle can be fou
 
 ### TL;DR:
 
-The EQMOD Bluetooth dongle is designed around the HC-05 Bluetooth module, which provides wireless serial communication capabilities. The schematic includes the necessary connections for power, ground, and serial communication (TX/RX) between the HC-05 module and the microcontroller. The design also incorporates level shifting components to ensure compatibility between the HC-05 module's voltage levels and the microcontroller's logic levels.
+The EQMOD Bluetooth dongle is designed around the HC-05 Bluetooth module, which provides wireless serial communication capabilities. The schematic includes the necessary connections for power, ground, and serial communication (TX/RX) between the HC-05 module and the mount. The design also incorporates level shifting components to ensure compatibility between the HC-05 module's voltage levels and the mount's logic levels.
 
 ![EQMOD Bluetooth Dongle Schematic](./.static/dongle-schematics.png)
+
+![EQMOD Bluetooth Dongle PCB](./.static/dongle-pcb-layout.png)
 
 ## Bibliography
 
